@@ -28,7 +28,56 @@ interface PoolState {
   toggleAddOn: (a: AddOn) => void;
   setProjectName: (n: string) => void;
   toggleDayMode: () => void;
+  applyPreset: (preset: PoolPreset) => void;
 }
+
+export interface PoolPreset {
+  name: string;
+  shape: PoolShape;
+  length: number;
+  width: number;
+  depth: number;
+  interiorMaterial: InteriorMaterial;
+  deckMaterial: DeckMaterial;
+  waterColor: WaterColor;
+  addOns: AddOn[];
+}
+
+export const POOL_PRESETS: PoolPreset[] = [
+  {
+    name: 'Luxury',
+    shape: 'kidney',
+    length: 35,
+    width: 18,
+    depth: 8,
+    interiorMaterial: 'tile',
+    deckMaterial: 'marble',
+    waterColor: 'deep-blue',
+    addOns: ['trees', 'chairs', 'umbrella', 'lights'],
+  },
+  {
+    name: 'Family',
+    shape: 'rectangle',
+    length: 22,
+    width: 12,
+    depth: 5,
+    interiorMaterial: 'fiberglass',
+    deckMaterial: 'wood',
+    waterColor: 'light-blue',
+    addOns: ['chairs', 'umbrella'],
+  },
+  {
+    name: 'Resort',
+    shape: 'l-shape',
+    length: 30,
+    width: 20,
+    depth: 7,
+    interiorMaterial: 'tile',
+    deckMaterial: 'stone',
+    waterColor: 'turquoise',
+    addOns: ['trees', 'chairs', 'lights'],
+  },
+];
 
 const PRICING = {
   basePricePerSqFt: 85,
