@@ -49,6 +49,26 @@ export function ControlsSidebar() {
       </div>
 
       <div className="p-4 space-y-6 flex-1">
+        {/* Presets */}
+        <div>
+          <SectionLabel>Templates</SectionLabel>
+          <div className="grid grid-cols-3 gap-2">
+            {POOL_PRESETS.map((preset) => {
+              const Icon = preset.name === 'Luxury' ? Crown : preset.name === 'Family' ? Users : Palmtree;
+              return (
+                <button
+                  key={preset.name}
+                  onClick={() => store.applyPreset(preset)}
+                  className="flex flex-col items-center gap-1.5 p-2.5 rounded-lg text-[10px] font-medium bg-muted/50 hover:bg-primary/15 hover:text-pool-accent border border-transparent hover:border-pool transition-all duration-150 active:scale-[0.97]"
+                >
+                  <Icon className="h-4 w-4" />
+                  {preset.name}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+
         {/* Shape */}
         <div>
           <SectionLabel>Shape</SectionLabel>
