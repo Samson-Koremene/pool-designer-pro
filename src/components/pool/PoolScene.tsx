@@ -1,0 +1,70 @@
+import { Canvas } from '@react-three/fiber';
+import { OrbitControls, Environment, ContactShadows } from '@react-three/drei';
+import { Suspense } from 'react';
+import { usePoolStore } from '@/store/usePoolStore';
+import { PoolModel } from './PoolModel';
+import { PoolAddOns } from './PoolAddOns';
+
+export function PoolScene() {
+  const dayMode = usePoolStore((s) => s.dayMode);
+
+  return (
+    <div className="w-full h-full">
+      <Canvas
+        shadows
+        camera={{ position: [25, 18, 25], fov: 45 }}
+        gl={{ antialias: true, alpha: false }}
+        style={{ background: dayMode ? '#87CEEB' : '#0a0e1a' }}
+      >
+        <Suspense fallback={null}>
+          {dayMode ? (
+            <>
+              <ambientLight intensity={0.5} />
+              <directionalLight
+                position={[15, 20, 10]}
+                intensity={1.8}
+                castShadow
+                shadow-mapSize-width={2048}
+                shadow-mapSize-height={2048}
+              />
+            </>
+          ) : (
+            <>
+              <ambientLight intensity={0.15} />
+              <directionalLight position={[10, 15, 5]} intensity={0.4} />
+              <pointLight position={[0, 3, 0]} intensity={1.5} color="#4dd9e8" />
+            </>
+          )}
+
+          <PoolModel />
+          <PoolAddOns />
+
+          {/* Ground plane */}
+          <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.01, 0]} receiveShadow>
+            <planeGeometry args={[80, 80]} />
+            <meshStandardMaterial color={dayMode ? '#4a7c59' : '#1a2a1f'} />
+          </mesh>
+
+          <ContactShadows
+            position={[0, 0, 0]}
+            opacity={0.5}
+            scale={50}
+            blur={2}
+            far={20}
+          />
+
+          <Environment preset={dayMode ? 'city' : 'night'} />
+          <OrbitControls
+            enablePan
+            enableZoom
+            enableRotate
+            minPolarAngle={0.2}
+            maxPolarAngle={Math.PI / 2.2}
+            minDistance={10}
+            maxDistance={60}
+          />
+        </Suspense>
+      </Canvas>
+    </div>
+  );
+}
