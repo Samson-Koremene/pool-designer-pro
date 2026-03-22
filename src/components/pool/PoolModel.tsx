@@ -98,20 +98,12 @@ export function PoolModel() {
         <meshStandardMaterial color={INTERIOR_COLORS[interiorMaterial]} roughness={0.4} side={THREE.BackSide} />
       </mesh>
 
-      {/* Water surface */}
-      <mesh rotation={[-Math.PI / 2, 0, 0]} position={[0, sd * 0.7, 0]}>
-        <shapeGeometry args={[poolShape]} />
-        <meshPhysicalMaterial
-          color={WATER_COLORS[waterColor]}
-          transparent
-          opacity={0.75}
-          roughness={0.05}
-          metalness={0.1}
-          transmission={0.3}
-          clearcoat={1}
-          clearcoatRoughness={0.1}
-        />
-      </mesh>
+      {/* Animated Water surface */}
+      <WaterSurface
+        poolShape={poolShape}
+        color={WATER_COLORS[waterColor]}
+        yPosition={sd * 0.7}
+      />
     </group>
   );
 }
