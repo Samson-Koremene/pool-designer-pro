@@ -122,4 +122,16 @@ export const usePoolStore = create<PoolState>((set) => ({
     })),
   setProjectName: (projectName) => set({ projectName }),
   toggleDayMode: () => set((s) => ({ dayMode: !s.dayMode })),
+  applyPreset: (preset) =>
+    set({
+      shape: preset.shape,
+      length: preset.length,
+      width: preset.width,
+      depth: preset.depth,
+      interiorMaterial: preset.interiorMaterial,
+      deckMaterial: preset.deckMaterial,
+      waterColor: preset.waterColor,
+      addOns: [...preset.addOns],
+      projectName: `${preset.name} Pool`,
+    }),
 }));

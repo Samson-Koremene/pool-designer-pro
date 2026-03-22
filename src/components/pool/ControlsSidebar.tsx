@@ -1,5 +1,5 @@
-import { usePoolStore, type PoolShape, type InteriorMaterial, type DeckMaterial, type WaterColor, type AddOn } from '@/store/usePoolStore';
-import { Waves, Square, Circle, Heart, LayoutDashboard, TreePine, Armchair, Umbrella, Lightbulb } from 'lucide-react';
+import { usePoolStore, POOL_PRESETS, type PoolShape, type InteriorMaterial, type DeckMaterial, type WaterColor, type AddOn } from '@/store/usePoolStore';
+import { Waves, Square, Circle, Heart, LayoutDashboard, TreePine, Armchair, Umbrella, Lightbulb, Crown, Users, Palmtree } from 'lucide-react';
 
 const SHAPES: { id: PoolShape; label: string; icon: typeof Square }[] = [
   { id: 'rectangle', label: 'Rectangle', icon: Square },
