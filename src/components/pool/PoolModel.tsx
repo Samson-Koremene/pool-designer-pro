@@ -107,3 +107,46 @@ export function PoolModel() {
     </group>
   );
 }
+
+function WaterSurface({ poolShape, color, yPosition }: { poolShape: THREE.Shape; color: string; yPosition: number }) {
+  const meshRef = useRef<THREE.Mesh>(null!);
+  const geoRef = useRef<THREE.ShapeGeometry>(null!);
+
+  const basePositions = useMemo(() => {
+    const geo = new THREE.ShapeGeometry(poolShape, 32);
+    return new Float32Array(geo.attributes.position.array);
+  }, [poolShape]);
+
+  useFrame(({ clock }) => {
+    if (!geoRef.current) return;
+    const pos = geoRef.current.attributes.position;
+    const t = clock.getElapsedTime();
+    for (let i = 0; i < pos.count; i++) {
+      const bx = basePositions[i * 3];
+      const by = basePositions[i * 3 + 1];
+      const wave =
+        Math.sin(bx * 1.2 + t * 1.8) * 0.04 +
+        Math.sin(by * 1.5 + t * 2.2) * 0.03 +
+        Math.sin((bx + by) * 0.8 + t * 1.1) * 0.02;
+      pos.setZ(i, basePositions[i * 3 + 2] + wave);
+    }
+    pos.needsUpdate = true;
+    geoRef.current.computeVertexNormals();
+  });
+
+  return (
+    <mesh ref={meshRef} rotation={[-Math.PI / 2, 0, 0]} position={[0, yPosition, 0]}>
+      <shapeGeometry ref={geoRef} args={[poolShape, 32]} />
+      <meshPhysicalMaterial
+        color={color}
+        transparent
+        opacity={0.72}
+        roughness={0.02}
+        metalness={0.15}
+        transmission={0.35}
+        clearcoat={1}
+        clearcoatRoughness={0.05}
+      />
+    </mesh>
+  );
+}
