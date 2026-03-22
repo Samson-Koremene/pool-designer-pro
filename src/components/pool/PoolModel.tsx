@@ -1,4 +1,5 @@
-import { useMemo } from 'react';
+import { useMemo, useRef } from 'react';
+import { useFrame } from '@react-three/fiber';
 import { usePoolStore, type PoolShape, type WaterColor } from '@/store/usePoolStore';
 import * as THREE from 'three';
 
