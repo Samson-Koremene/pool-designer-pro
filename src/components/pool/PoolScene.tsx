@@ -1,4 +1,4 @@
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useThree } from '@react-three/fiber';
 import { OrbitControls, Environment, ContactShadows } from '@react-three/drei';
 import { Suspense, forwardRef, useImperativeHandle, useRef, useCallback } from 'react';
 import { usePoolStore } from '@/store/usePoolStore';
