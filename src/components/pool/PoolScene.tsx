@@ -37,7 +37,7 @@ export const PoolScene = forwardRef<PoolSceneHandle>(function PoolScene(_, ref) 
       <Canvas
         shadows
         camera={{ position: [25, 18, 25], fov: 45 }}
-        gl={{ antialias: true, alpha: false }}
+        gl={{ antialias: true, alpha: false, preserveDrawingBuffer: true }}
         style={{ background: dayMode ? '#87CEEB' : '#0a0e1a' }}
       >
         <Suspense fallback={null}>
