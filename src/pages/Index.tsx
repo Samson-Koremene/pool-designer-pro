@@ -18,6 +18,7 @@ const Index = () => {
         onToggleRight={() => { setRightOpen((v) => !v); setLeftOpen(false); }}
         leftOpen={leftOpen}
         rightOpen={rightOpen}
+        onExport={() => sceneRef.current?.exportPNG()}
       />
       <div className="flex flex-1 min-h-0 relative">
         {/* Desktop sidebar */}
