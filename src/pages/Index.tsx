@@ -28,7 +28,7 @@ const Index = () => {
         {leftOpen && (
           <>
             <div className="fixed inset-0 top-12 bg-black/50 z-30 lg:hidden" onClick={() => setLeftOpen(false)} />
-            <div className="fixed left-0 top-12 bottom-0 z-40 lg:hidden animate-fade-in">
+            <div className="fixed left-0 top-12 bottom-0 z-40 lg:hidden animate-slide-in-left">
               <ControlsSidebar />
             </div>
           </>
