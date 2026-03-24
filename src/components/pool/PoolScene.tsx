@@ -92,4 +92,4 @@ export const PoolScene = forwardRef<PoolSceneHandle>(function PoolScene(_, ref) 
       </Canvas>
     </div>
   );
-}
+});
