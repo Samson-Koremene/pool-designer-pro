@@ -49,7 +49,7 @@ const Index = () => {
         {rightOpen && (
           <>
             <div className="fixed inset-0 top-12 bg-black/50 z-30 lg:hidden" onClick={() => setRightOpen(false)} />
-            <div className="fixed right-0 top-12 bottom-0 z-40 lg:hidden animate-fade-in">
+            <div className="fixed right-0 top-12 bottom-0 z-40 lg:hidden animate-slide-in-right">
               <PropertiesPanel />
             </div>
           </>
