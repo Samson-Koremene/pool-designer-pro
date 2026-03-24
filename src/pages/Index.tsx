@@ -37,7 +37,7 @@ const Index = () => {
         )}
 
         <main className="flex-1 relative">
-          <PoolScene />
+          <PoolScene ref={sceneRef} />
           {/* Mobile price badge */}
           <MobilePriceBadge />
         </main>

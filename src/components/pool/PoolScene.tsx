@@ -11,9 +11,9 @@ export interface PoolSceneHandle {
 }
 
 function SceneCapture({ onRendererReady }: { onRendererReady: (gl: WebGLRenderer) => void }) {
-  const { gl } = require('@react-three/fiber').useThree();
+  const { gl } = useThree();
   const called = useRef(false);
-  if (!called.current) { called.current = true; onRendererReady(gl); }
+  if (!called.current) { called.current = true; onRendererReady(gl as unknown as WebGLRenderer); }
   return null;
 }
 
