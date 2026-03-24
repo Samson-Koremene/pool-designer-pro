@@ -10,7 +10,7 @@ interface TopBarProps {
   onExport: () => void;
 }
 
-export function TopBar({ onToggleLeft, onToggleRight, leftOpen, rightOpen }: TopBarProps) {
+export function TopBar({ onToggleLeft, onToggleRight, leftOpen, rightOpen, onExport }: TopBarProps) {
   const { projectName, setProjectName } = usePoolStore();
   const [editing, setEditing] = useState(false);
 
