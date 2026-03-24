@@ -41,6 +41,7 @@ export const PoolScene = forwardRef<PoolSceneHandle>(function PoolScene(_, ref) 
         style={{ background: dayMode ? '#87CEEB' : '#0a0e1a' }}
       >
         <Suspense fallback={null}>
+          <SceneCapture onRendererReady={(gl) => { rendererRef.current = gl; }} />
           {dayMode ? (
             <>
               <ambientLight intensity={0.5} />
