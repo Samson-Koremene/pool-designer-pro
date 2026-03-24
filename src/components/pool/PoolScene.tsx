@@ -1,11 +1,35 @@
-import { Canvas } from '@react-three/fiber';
+import { Canvas, useThree } from '@react-three/fiber';
 import { OrbitControls, Environment, ContactShadows } from '@react-three/drei';
-import { Suspense } from 'react';
+import { Suspense, forwardRef, useImperativeHandle, useRef, useCallback } from 'react';
 import { usePoolStore } from '@/store/usePoolStore';
 import { PoolModel } from './PoolModel';
 import { PoolAddOns } from './PoolAddOns';
+import type { WebGLRenderer } from 'three';
 
-export function PoolScene() {
+export interface PoolSceneHandle {
+  exportPNG: () => void;
+}
+
+function SceneCapture({ onRendererReady }: { onRendererReady: (gl: WebGLRenderer) => void }) {
+  const { gl } = useThree();
+  const called = useRef(false);
+  if (!called.current) { called.current = true; onRendererReady(gl as unknown as WebGLRenderer); }
+  return null;
+}
+
+export const PoolScene = forwardRef<PoolSceneHandle>(function PoolScene(_, ref) {
+  const rendererRef = useRef<WebGLRenderer | null>(null);
+
+  const handleExport = useCallback(() => {
+    const gl = rendererRef.current;
+    if (!gl) return;
+    const link = document.createElement('a');
+    link.download = 'pool-design.png';
+    link.href = gl.domElement.toDataURL('image/png');
+    link.click();
+  }, []);
+
+  useImperativeHandle(ref, () => ({ exportPNG: handleExport }), [handleExport]);
   const dayMode = usePoolStore((s) => s.dayMode);
 
   return (
@@ -13,10 +37,11 @@ export function PoolScene() {
       <Canvas
         shadows
         camera={{ position: [25, 18, 25], fov: 45 }}
-        gl={{ antialias: true, alpha: false }}
+        gl={{ antialias: true, alpha: false, preserveDrawingBuffer: true }}
         style={{ background: dayMode ? '#87CEEB' : '#0a0e1a' }}
       >
         <Suspense fallback={null}>
+          <SceneCapture onRendererReady={(gl) => { rendererRef.current = gl; }} />
           {dayMode ? (
             <>
               <ambientLight intensity={0.5} />
@@ -67,4 +92,4 @@ export function PoolScene() {
       </Canvas>
     </div>
   );
-}
+});

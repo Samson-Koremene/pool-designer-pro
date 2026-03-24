@@ -7,9 +7,10 @@ interface TopBarProps {
   onToggleRight: () => void;
   leftOpen: boolean;
   rightOpen: boolean;
+  onExport: () => void;
 }
 
-export function TopBar({ onToggleLeft, onToggleRight, leftOpen, rightOpen }: TopBarProps) {
+export function TopBar({ onToggleLeft, onToggleRight, leftOpen, rightOpen, onExport }: TopBarProps) {
   const { projectName, setProjectName } = usePoolStore();
   const [editing, setEditing] = useState(false);
 
@@ -59,7 +60,7 @@ export function TopBar({ onToggleLeft, onToggleRight, leftOpen, rightOpen }: Top
         <button className="hidden sm:flex p-2 rounded-lg text-muted-foreground hover:bg-muted transition-all duration-150 active:scale-[0.95]">
           <Share2 className="h-4 w-4" />
         </button>
-        <button className="hidden sm:flex p-2 rounded-lg text-muted-foreground hover:bg-muted transition-all duration-150 active:scale-[0.95]">
+        <button onClick={onExport} className="hidden sm:flex p-2 rounded-lg text-muted-foreground hover:bg-muted transition-all duration-150 active:scale-[0.95]" title="Export as PNG">
           <Download className="h-4 w-4" />
         </button>
         <button className="hidden sm:flex ml-2 px-3 py-1.5 rounded-lg text-xs font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-150 active:scale-[0.97]">

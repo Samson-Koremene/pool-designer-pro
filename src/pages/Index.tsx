@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { PoolScene } from '@/components/pool/PoolScene';
+import { useState, useRef } from 'react';
+import { PoolScene, type PoolSceneHandle } from '@/components/pool/PoolScene';
 import { ControlsSidebar } from '@/components/pool/ControlsSidebar';
 import { PropertiesPanel } from '@/components/pool/PropertiesPanel';
 import { TopBar } from '@/components/pool/TopBar';
@@ -9,6 +9,7 @@ import { DollarSign } from 'lucide-react';
 const Index = () => {
   const [leftOpen, setLeftOpen] = useState(false);
   const [rightOpen, setRightOpen] = useState(false);
+  const sceneRef = useRef<PoolSceneHandle>(null);
 
   return (
     <div className="h-screen flex flex-col bg-background overflow-hidden">
@@ -17,6 +18,7 @@ const Index = () => {
         onToggleRight={() => { setRightOpen((v) => !v); setLeftOpen(false); }}
         leftOpen={leftOpen}
         rightOpen={rightOpen}
+        onExport={() => sceneRef.current?.exportPNG()}
       />
       <div className="flex flex-1 min-h-0 relative">
         {/* Desktop sidebar */}
@@ -35,7 +37,7 @@ const Index = () => {
         )}
 
         <main className="flex-1 relative">
-          <PoolScene />
+          <PoolScene ref={sceneRef} />
           {/* Mobile price badge */}
           <MobilePriceBadge />
         </main>
