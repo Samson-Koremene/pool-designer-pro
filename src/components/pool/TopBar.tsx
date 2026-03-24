@@ -7,6 +7,7 @@ interface TopBarProps {
   onToggleRight: () => void;
   leftOpen: boolean;
   rightOpen: boolean;
+  onExport: () => void;
 }
 
 export function TopBar({ onToggleLeft, onToggleRight, leftOpen, rightOpen }: TopBarProps) {
