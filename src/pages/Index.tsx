@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { PoolScene } from '@/components/pool/PoolScene';
+import { useState, useRef } from 'react';
+import { PoolScene, type PoolSceneHandle } from '@/components/pool/PoolScene';
 import { ControlsSidebar } from '@/components/pool/ControlsSidebar';
 import { PropertiesPanel } from '@/components/pool/PropertiesPanel';
 import { TopBar } from '@/components/pool/TopBar';
