@@ -9,6 +9,7 @@ import { DollarSign } from 'lucide-react';
 const Index = () => {
   const [leftOpen, setLeftOpen] = useState(false);
   const [rightOpen, setRightOpen] = useState(false);
+  const sceneRef = useRef<PoolSceneHandle>(null);
 
   return (
     <div className="h-screen flex flex-col bg-background overflow-hidden">
