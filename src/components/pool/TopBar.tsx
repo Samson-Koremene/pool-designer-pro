@@ -15,56 +15,69 @@ export function TopBar({ onToggleLeft, onToggleRight, leftOpen, rightOpen, onExp
   const [editing, setEditing] = useState(false);
 
   return (
-    <header className="h-12 surface-elevated border-b border-border flex items-center justify-between px-3 sm:px-4 shrink-0 z-50">
-      <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+    <header className="h-14 surface-glass border-b border-border/60 flex items-center justify-between px-4 sm:px-5 shrink-0 z-50">
+      <div className="flex items-center gap-3 min-w-0">
         {/* Mobile panel toggles */}
         <button
           onClick={onToggleLeft}
-          className={`lg:hidden p-2 rounded-lg transition-all duration-150 active:scale-[0.95] ${
-            leftOpen ? 'bg-primary/15 text-pool-accent' : 'text-muted-foreground hover:bg-muted'
+          className={`lg:hidden p-2.5 rounded-xl transition-all duration-200 active:scale-95 ${
+            leftOpen
+              ? 'gradient-primary text-primary-foreground shadow-glow'
+              : 'text-muted-foreground hover:text-foreground hover:bg-muted/80'
           }`}
         >
           {leftOpen ? <X className="h-4 w-4" /> : <SlidersHorizontal className="h-4 w-4" />}
         </button>
 
-        <Waves className="h-5 w-5 text-pool-accent shrink-0" />
-        {editing ? (
-          <input
-            autoFocus
-            value={projectName}
-            onChange={(e) => setProjectName(e.target.value)}
-            onBlur={() => setEditing(false)}
-            onKeyDown={(e) => e.key === 'Enter' && setEditing(false)}
-            className="bg-transparent border-b border-pool text-sm font-medium outline-none w-32 sm:w-48 min-w-0"
-          />
-        ) : (
-          <button
-            onClick={() => setEditing(true)}
-            className="text-sm font-medium hover:text-pool-accent transition-colors truncate"
-          >
-            {projectName}
-          </button>
-        )}
+        <div className="flex items-center gap-2.5">
+          <div className="w-8 h-8 rounded-xl gradient-primary flex items-center justify-center shadow-glow">
+            <Waves className="h-4 w-4 text-primary-foreground" />
+          </div>
+          {editing ? (
+            <input
+              autoFocus
+              value={projectName}
+              onChange={(e) => setProjectName(e.target.value)}
+              onBlur={() => setEditing(false)}
+              onKeyDown={(e) => e.key === 'Enter' && setEditing(false)}
+              className="bg-transparent border-b border-pool text-sm font-semibold outline-none w-32 sm:w-48 min-w-0 tracking-tight"
+            />
+          ) : (
+            <button
+              onClick={() => setEditing(true)}
+              className="text-sm font-semibold hover:text-pool-accent transition-colors truncate tracking-tight"
+            >
+              {projectName}
+            </button>
+          )}
+        </div>
       </div>
-      <div className="flex items-center gap-1">
+
+      <div className="flex items-center gap-1.5">
         {/* Mobile properties toggle */}
         <button
           onClick={onToggleRight}
-          className={`lg:hidden p-2 rounded-lg transition-all duration-150 active:scale-[0.95] ${
-            rightOpen ? 'bg-primary/15 text-pool-accent' : 'text-muted-foreground hover:bg-muted'
+          className={`lg:hidden p-2.5 rounded-xl transition-all duration-200 active:scale-95 ${
+            rightOpen
+              ? 'gradient-primary text-primary-foreground shadow-glow'
+              : 'text-muted-foreground hover:text-foreground hover:bg-muted/80'
           }`}
         >
           {rightOpen ? <X className="h-4 w-4" /> : <Info className="h-4 w-4" />}
         </button>
 
-        <button className="hidden sm:flex p-2 rounded-lg text-muted-foreground hover:bg-muted transition-all duration-150 active:scale-[0.95]">
+        <button className="hidden sm:flex p-2.5 rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-all duration-200 active:scale-95">
           <Share2 className="h-4 w-4" />
         </button>
-        <button onClick={onExport} className="hidden sm:flex p-2 rounded-lg text-muted-foreground hover:bg-muted transition-all duration-150 active:scale-[0.95]" title="Export as PNG">
+        <button
+          onClick={onExport}
+          className="hidden sm:flex p-2.5 rounded-xl text-muted-foreground hover:text-foreground hover:bg-muted/80 transition-all duration-200 active:scale-95"
+          title="Export as PNG"
+        >
           <Download className="h-4 w-4" />
         </button>
-        <button className="hidden sm:flex ml-2 px-3 py-1.5 rounded-lg text-xs font-medium bg-primary text-primary-foreground hover:bg-primary/90 transition-all duration-150 active:scale-[0.97]">
-          Save Project
+        <button className="hidden sm:flex ml-2 px-4 py-2 rounded-xl text-xs font-semibold gradient-primary text-primary-foreground hover:opacity-90 transition-all duration-200 active:scale-[0.97] shadow-glow tracking-wide uppercase">
+          Save
         </button>
       </div>
     </header>
