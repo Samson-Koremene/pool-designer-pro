@@ -66,7 +66,7 @@ export function PropertiesPanel() {
             onClick={store.toggleDayMode}
             className="w-full flex items-center justify-center gap-2.5 px-3 py-3 rounded-xl text-xs font-semibold bg-card hover:bg-muted/80 border border-border/40 transition-all duration-200 active:scale-[0.97]"
           >
-            {store.dayMode ? <Sun className="h-4 w-4 text-amber-400" /> : <Moon className="h-4 w-4 text-blue-300" />}
+            {store.dayMode ? <Sun className="h-4 w-4 text-pool-accent" /> : <Moon className="h-4 w-4 text-pool-accent" />}
             {store.dayMode ? 'Day Mode' : 'Night Mode'}
           </button>
         </div>
