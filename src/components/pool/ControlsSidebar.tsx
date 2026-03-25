@@ -1,5 +1,5 @@
 import { usePoolStore, POOL_PRESETS, type PoolShape, type InteriorMaterial, type DeckMaterial, type WaterColor, type AddOn } from '@/store/usePoolStore';
-import { Waves, Square, Circle, Heart, LayoutDashboard, TreePine, Armchair, Umbrella, Lightbulb, Crown, Users, Palmtree, Check } from 'lucide-react';
+import { Square, Circle, Heart, LayoutDashboard, TreePine, Armchair, Umbrella, Lightbulb, Crown, Users, Palmtree, Check } from 'lucide-react';
 
 const SHAPES: { id: PoolShape; label: string; icon: typeof Square }[] = [
   { id: 'rectangle', label: 'Rectangle', icon: Square },
@@ -8,16 +8,16 @@ const SHAPES: { id: PoolShape; label: string; icon: typeof Square }[] = [
   { id: 'l-shape', label: 'L-Shape', icon: LayoutDashboard },
 ];
 
-const INTERIOR_MATERIALS: { id: InteriorMaterial; label: string; color: string }[] = [
-  { id: 'tile', label: 'Tile', color: '#7ec8e3' },
-  { id: 'concrete', label: 'Concrete', color: '#a8a29e' },
-  { id: 'fiberglass', label: 'Fiberglass', color: '#bae6fd' },
+const INTERIOR_MATERIALS: { id: InteriorMaterial; label: string; swatch: string }[] = [
+  { id: 'tile', label: 'Tile', swatch: '#7ec8e3' },
+  { id: 'concrete', label: 'Concrete', swatch: '#a8a29e' },
+  { id: 'fiberglass', label: 'Fiberglass', swatch: '#bae6fd' },
 ];
 
-const DECK_MATERIALS: { id: DeckMaterial; label: string; color: string }[] = [
-  { id: 'wood', label: 'Wood', color: '#92400e' },
-  { id: 'stone', label: 'Stone', color: '#a8a29e' },
-  { id: 'marble', label: 'Marble', color: '#e7e5e4' },
+const DECK_MATERIALS: { id: DeckMaterial; label: string; swatch: string }[] = [
+  { id: 'wood', label: 'Wood', swatch: '#92400e' },
+  { id: 'stone', label: 'Stone', swatch: '#a8a29e' },
+  { id: 'marble', label: 'Marble', swatch: '#e7e5e4' },
 ];
 
 const WATER_COLORS: { id: WaterColor; label: string; hex: string }[] = [
@@ -36,42 +36,40 @@ const ADD_ONS: { id: AddOn; label: string; icon: typeof TreePine; price: number 
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <h3 className="text-[10px] font-bold uppercase tracking-[0.12em] text-muted-foreground mb-3 flex items-center gap-2">
-      <span className="w-5 h-px bg-border" />
+    <h3 className="text-[10px] font-semibold uppercase tracking-[0.1em] text-muted-foreground mb-2.5 mt-1">
       {children}
     </h3>
   );
+}
+
+function SectionDivider() {
+  return <div className="border-t border-border" />;
 }
 
 export function ControlsSidebar() {
   const store = usePoolStore();
 
   return (
-    <aside className="w-[280px] surface-glass border-r border-border/60 flex flex-col h-full overflow-y-auto scrollbar-thin">
-      <div className="p-5 border-b border-border/60 flex items-center gap-3">
-        <div className="w-7 h-7 rounded-lg gradient-primary flex items-center justify-center shadow-glow">
-          <Waves className="h-3.5 w-3.5 text-primary-foreground" />
-        </div>
-        <div>
-          <span className="font-semibold text-sm tracking-tight">Pool Builder</span>
-          <span className="text-[10px] text-muted-foreground block -mt-0.5">Configure your design</span>
-        </div>
+    <aside className="w-64 bg-card border-r border-border flex flex-col h-full overflow-y-auto scrollbar-thin">
+      {/* Header */}
+      <div className="px-4 py-3 border-b border-border">
+        <span className="font-semibold text-sm">Pool Builder</span>
       </div>
 
-      <div className="p-4 space-y-6 flex-1">
+      <div className="flex-1 overflow-y-auto">
         {/* Presets */}
-        <div>
+        <div className="p-4">
           <SectionLabel>Templates</SectionLabel>
-          <div className="grid grid-cols-3 gap-2">
+          <div className="grid grid-cols-3 gap-1.5">
             {POOL_PRESETS.map((preset) => {
               const Icon = preset.name === 'Luxury' ? Crown : preset.name === 'Family' ? Users : Palmtree;
               return (
                 <button
                   key={preset.name}
                   onClick={() => store.applyPreset(preset)}
-                  className="group flex flex-col items-center gap-2 p-3 rounded-xl text-[10px] font-semibold bg-card hover:bg-primary/10 hover:text-pool-accent border border-border/40 hover:border-pool transition-all duration-200 active:scale-[0.96]"
+                  className="flex flex-col items-center gap-1.5 py-2.5 px-2 rounded-md text-[10px] font-medium text-muted-foreground bg-secondary hover:bg-muted hover:text-foreground transition-colors"
                 >
-                  <Icon className="h-4 w-4 opacity-60 group-hover:opacity-100 transition-opacity" />
+                  <Icon className="h-3.5 w-3.5" />
                   {preset.name}
                 </button>
               );
@@ -79,29 +77,33 @@ export function ControlsSidebar() {
           </div>
         </div>
 
+        <SectionDivider />
+
         {/* Shape */}
-        <div>
+        <div className="p-4">
           <SectionLabel>Shape</SectionLabel>
-          <div className="grid grid-cols-2 gap-2">
+          <div className="grid grid-cols-2 gap-1.5">
             {SHAPES.map(({ id, label, icon: Icon }) => (
               <button
                 key={id}
                 onClick={() => store.setShape(id)}
-                className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-medium transition-all duration-200 active:scale-[0.96] ${
+                className={`flex items-center gap-2 px-2.5 py-2 rounded-md text-xs font-medium transition-colors ${
                   store.shape === id
-                    ? 'gradient-primary text-primary-foreground shadow-glow'
-                    : 'bg-card text-muted-foreground hover:text-foreground border border-border/40 hover:border-border'
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-secondary text-muted-foreground hover:text-foreground hover:bg-muted'
                 }`}
               >
-                <Icon className="h-3.5 w-3.5" />
+                <Icon className="h-3.5 w-3.5 shrink-0" />
                 {label}
               </button>
             ))}
           </div>
         </div>
 
+        <SectionDivider />
+
         {/* Dimensions */}
-        <div>
+        <div className="p-4">
           <SectionLabel>Dimensions (ft)</SectionLabel>
           <div className="space-y-4">
             {[
@@ -110,9 +112,9 @@ export function ControlsSidebar() {
               { label: 'Depth', value: store.depth, set: store.setDepth, min: 3, max: 12 },
             ].map(({ label, value, set, min, max }) => (
               <div key={label}>
-                <div className="flex justify-between text-xs mb-2">
-                  <span className="text-muted-foreground font-medium">{label}</span>
-                  <span className="font-mono font-semibold text-pool-accent tabular-nums">{value}</span>
+                <div className="flex justify-between text-xs mb-1.5">
+                  <span className="text-muted-foreground">{label}</span>
+                  <span className="font-mono font-semibold text-foreground tabular-nums">{value}</span>
                 </div>
                 <input
                   type="range"
@@ -127,91 +129,101 @@ export function ControlsSidebar() {
           </div>
         </div>
 
+        <SectionDivider />
+
         {/* Interior Material */}
-        <div>
-          <SectionLabel>Interior Material</SectionLabel>
-          <div className="flex gap-2">
-            {INTERIOR_MATERIALS.map(({ id, label, color }) => (
+        <div className="p-4">
+          <SectionLabel>Interior</SectionLabel>
+          <div className="grid grid-cols-3 gap-1.5">
+            {INTERIOR_MATERIALS.map(({ id, label, swatch }) => (
               <button
                 key={id}
                 onClick={() => store.setInteriorMaterial(id)}
-                className={`flex-1 flex flex-col items-center gap-2 p-3 rounded-xl text-[10px] font-semibold transition-all duration-200 active:scale-[0.96] ${
+                className={`flex flex-col items-center gap-1.5 p-2.5 rounded-md text-[10px] font-medium transition-colors ${
                   store.interiorMaterial === id
-                    ? 'border-2 border-pool bg-primary/10 shadow-glow'
-                    : 'border border-border/40 bg-card hover:border-border'
+                    ? 'ring-2 ring-primary ring-inset bg-secondary text-foreground'
+                    : 'bg-secondary text-muted-foreground hover:text-foreground hover:bg-muted'
                 }`}
               >
-                <div className="w-7 h-7 rounded-lg shadow-inner" style={{ backgroundColor: color }} />
+                <div className="w-6 h-6 rounded" style={{ backgroundColor: swatch }} />
                 {label}
               </button>
             ))}
           </div>
         </div>
 
+        <SectionDivider />
+
         {/* Deck Material */}
-        <div>
-          <SectionLabel>Deck Material</SectionLabel>
-          <div className="flex gap-2">
-            {DECK_MATERIALS.map(({ id, label, color }) => (
+        <div className="p-4">
+          <SectionLabel>Deck</SectionLabel>
+          <div className="grid grid-cols-3 gap-1.5">
+            {DECK_MATERIALS.map(({ id, label, swatch }) => (
               <button
                 key={id}
                 onClick={() => store.setDeckMaterial(id)}
-                className={`flex-1 flex flex-col items-center gap-2 p-3 rounded-xl text-[10px] font-semibold transition-all duration-200 active:scale-[0.96] ${
+                className={`flex flex-col items-center gap-1.5 p-2.5 rounded-md text-[10px] font-medium transition-colors ${
                   store.deckMaterial === id
-                    ? 'border-2 border-pool bg-primary/10 shadow-glow'
-                    : 'border border-border/40 bg-card hover:border-border'
+                    ? 'ring-2 ring-primary ring-inset bg-secondary text-foreground'
+                    : 'bg-secondary text-muted-foreground hover:text-foreground hover:bg-muted'
                 }`}
               >
-                <div className="w-7 h-7 rounded-lg shadow-inner" style={{ backgroundColor: color }} />
+                <div className="w-6 h-6 rounded" style={{ backgroundColor: swatch }} />
                 {label}
               </button>
             ))}
           </div>
         </div>
 
+        <SectionDivider />
+
         {/* Water Color */}
-        <div>
+        <div className="p-4">
           <SectionLabel>Water Color</SectionLabel>
-          <div className="flex gap-3">
+          <div className="flex gap-2.5">
             {WATER_COLORS.map(({ id, label, hex }) => (
               <button
                 key={id}
                 onClick={() => store.setWaterColor(id)}
                 title={label}
-                className={`relative w-9 h-9 rounded-xl transition-all duration-200 active:scale-95 ${
+                className={`relative w-8 h-8 rounded-md transition-all ${
                   store.waterColor === id
-                    ? 'ring-2 ring-primary ring-offset-2 ring-offset-card scale-110'
-                    : 'hover:scale-110 opacity-80 hover:opacity-100'
+                    ? 'ring-2 ring-primary ring-offset-2 ring-offset-card'
+                    : 'opacity-70 hover:opacity-100'
                 }`}
                 style={{ backgroundColor: hex }}
               >
                 {store.waterColor === id && (
-                  <Check className="absolute inset-0 m-auto h-3.5 w-3.5 text-white drop-shadow-md" />
+                  <Check className="absolute inset-0 m-auto h-3 w-3 text-foreground drop-shadow" />
                 )}
               </button>
             ))}
           </div>
         </div>
 
+        <SectionDivider />
+
         {/* Add-Ons */}
-        <div>
+        <div className="p-4">
           <SectionLabel>Add-Ons</SectionLabel>
-          <div className="space-y-2">
+          <div className="space-y-1.5">
             {ADD_ONS.map(({ id, label, icon: Icon, price }) => {
               const active = store.addOns.includes(id);
               return (
                 <button
                   key={id}
                   onClick={() => store.toggleAddOn(id)}
-                  className={`w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-xs font-medium transition-all duration-200 active:scale-[0.97] ${
+                  className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-md text-xs font-medium transition-colors ${
                     active
-                      ? 'gradient-primary text-primary-foreground shadow-glow'
-                      : 'bg-card text-muted-foreground hover:text-foreground border border-border/40 hover:border-border'
+                      ? 'bg-primary text-primary-foreground'
+                      : 'bg-secondary text-muted-foreground hover:text-foreground hover:bg-muted'
                   }`}
                 >
-                  <Icon className="h-4 w-4" />
+                  <Icon className="h-3.5 w-3.5 shrink-0" />
                   <span className="flex-1 text-left">{label}</span>
-                  <span className={`font-mono text-[10px] ${active ? 'text-primary-foreground/70' : 'opacity-50'}`}>+${price}</span>
+                  <span className={`font-mono text-[10px] ${active ? 'text-primary-foreground/70' : 'opacity-50'}`}>
+                    +${price}
+                  </span>
                 </button>
               );
             })}
