@@ -1,5 +1,5 @@
 import { usePoolStore, POOL_PRESETS, type PoolShape, type InteriorMaterial, type DeckMaterial, type WaterColor, type AddOn } from '@/store/usePoolStore';
-import { Waves, Square, Circle, Heart, LayoutDashboard, TreePine, Armchair, Umbrella, Lightbulb, Crown, Users, Palmtree } from 'lucide-react';
+import { Waves, Square, Circle, Heart, LayoutDashboard, TreePine, Armchair, Umbrella, Lightbulb, Crown, Users, Palmtree, Check } from 'lucide-react';
 
 const SHAPES: { id: PoolShape; label: string; icon: typeof Square }[] = [
   { id: 'rectangle', label: 'Rectangle', icon: Square },
@@ -9,15 +9,15 @@ const SHAPES: { id: PoolShape; label: string; icon: typeof Square }[] = [
 ];
 
 const INTERIOR_MATERIALS: { id: InteriorMaterial; label: string; color: string }[] = [
-  { id: 'tile', label: 'Tile', color: 'bg-blue-200' },
-  { id: 'concrete', label: 'Concrete', color: 'bg-stone-300' },
-  { id: 'fiberglass', label: 'Fiberglass', color: 'bg-sky-100' },
+  { id: 'tile', label: 'Tile', color: '#7ec8e3' },
+  { id: 'concrete', label: 'Concrete', color: '#a8a29e' },
+  { id: 'fiberglass', label: 'Fiberglass', color: '#bae6fd' },
 ];
 
 const DECK_MATERIALS: { id: DeckMaterial; label: string; color: string }[] = [
-  { id: 'wood', label: 'Wood', color: 'bg-amber-700' },
-  { id: 'stone', label: 'Stone', color: 'bg-stone-400' },
-  { id: 'marble', label: 'Marble', color: 'bg-stone-100' },
+  { id: 'wood', label: 'Wood', color: '#92400e' },
+  { id: 'stone', label: 'Stone', color: '#a8a29e' },
+  { id: 'marble', label: 'Marble', color: '#e7e5e4' },
 ];
 
 const WATER_COLORS: { id: WaterColor; label: string; hex: string }[] = [
@@ -35,17 +35,27 @@ const ADD_ONS: { id: AddOn; label: string; icon: typeof TreePine; price: number 
 ];
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
-  return <h3 className="text-[11px] font-semibold uppercase tracking-wider text-muted-foreground mb-2">{children}</h3>;
+  return (
+    <h3 className="text-[10px] font-bold uppercase tracking-[0.12em] text-muted-foreground mb-3 flex items-center gap-2">
+      <span className="w-5 h-px bg-border" />
+      {children}
+    </h3>
+  );
 }
 
 export function ControlsSidebar() {
   const store = usePoolStore();
 
   return (
-    <aside className="w-72 surface-elevated border-r border-border flex flex-col h-full overflow-y-auto scrollbar-thin">
-      <div className="p-5 border-b border-border flex items-center gap-2">
-        <Waves className="h-5 w-5 text-pool-accent" />
-        <span className="font-semibold text-sm">Pool Builder</span>
+    <aside className="w-[280px] surface-glass border-r border-border/60 flex flex-col h-full overflow-y-auto scrollbar-thin">
+      <div className="p-5 border-b border-border/60 flex items-center gap-3">
+        <div className="w-7 h-7 rounded-lg gradient-primary flex items-center justify-center shadow-glow">
+          <Waves className="h-3.5 w-3.5 text-primary-foreground" />
+        </div>
+        <div>
+          <span className="font-semibold text-sm tracking-tight">Pool Builder</span>
+          <span className="text-[10px] text-muted-foreground block -mt-0.5">Configure your design</span>
+        </div>
       </div>
 
       <div className="p-4 space-y-6 flex-1">
@@ -59,9 +69,9 @@ export function ControlsSidebar() {
                 <button
                   key={preset.name}
                   onClick={() => store.applyPreset(preset)}
-                  className="flex flex-col items-center gap-1.5 p-2.5 rounded-lg text-[10px] font-medium bg-muted/50 hover:bg-primary/15 hover:text-pool-accent border border-transparent hover:border-pool transition-all duration-150 active:scale-[0.97]"
+                  className="group flex flex-col items-center gap-2 p-3 rounded-xl text-[10px] font-semibold bg-card hover:bg-primary/10 hover:text-pool-accent border border-border/40 hover:border-pool transition-all duration-200 active:scale-[0.96]"
                 >
-                  <Icon className="h-4 w-4" />
+                  <Icon className="h-4 w-4 opacity-60 group-hover:opacity-100 transition-opacity" />
                   {preset.name}
                 </button>
               );
@@ -77,10 +87,10 @@ export function ControlsSidebar() {
               <button
                 key={id}
                 onClick={() => store.setShape(id)}
-                className={`flex items-center gap-2 px-3 py-2.5 rounded-lg text-xs font-medium transition-all duration-150 active:scale-[0.97] ${
+                className={`flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-medium transition-all duration-200 active:scale-[0.96] ${
                   store.shape === id
-                    ? 'bg-primary/15 text-pool-accent border border-pool'
-                    : 'bg-muted/50 text-muted-foreground hover:bg-muted border border-transparent'
+                    ? 'gradient-primary text-primary-foreground shadow-glow'
+                    : 'bg-card text-muted-foreground hover:text-foreground border border-border/40 hover:border-border'
                 }`}
               >
                 <Icon className="h-3.5 w-3.5" />
@@ -93,16 +103,16 @@ export function ControlsSidebar() {
         {/* Dimensions */}
         <div>
           <SectionLabel>Dimensions (ft)</SectionLabel>
-          <div className="space-y-3">
+          <div className="space-y-4">
             {[
               { label: 'Length', value: store.length, set: store.setLength, min: 10, max: 40 },
               { label: 'Width', value: store.width, set: store.setWidth, min: 5, max: 25 },
               { label: 'Depth', value: store.depth, set: store.setDepth, min: 3, max: 12 },
             ].map(({ label, value, set, min, max }) => (
               <div key={label}>
-                <div className="flex justify-between text-xs mb-1">
-                  <span className="text-muted-foreground">{label}</span>
-                  <span className="font-mono font-medium">{value}</span>
+                <div className="flex justify-between text-xs mb-2">
+                  <span className="text-muted-foreground font-medium">{label}</span>
+                  <span className="font-mono font-semibold text-pool-accent tabular-nums">{value}</span>
                 </div>
                 <input
                   type="range"
@@ -110,7 +120,7 @@ export function ControlsSidebar() {
                   max={max}
                   value={value}
                   onChange={(e) => set(Number(e.target.value))}
-                  className="w-full h-1.5 bg-muted rounded-full appearance-none cursor-pointer accent-primary"
+                  className="w-full"
                 />
               </div>
             ))}
@@ -125,13 +135,13 @@ export function ControlsSidebar() {
               <button
                 key={id}
                 onClick={() => store.setInteriorMaterial(id)}
-                className={`flex-1 flex flex-col items-center gap-1.5 p-2.5 rounded-lg text-[10px] font-medium transition-all duration-150 active:scale-[0.97] ${
+                className={`flex-1 flex flex-col items-center gap-2 p-3 rounded-xl text-[10px] font-semibold transition-all duration-200 active:scale-[0.96] ${
                   store.interiorMaterial === id
-                    ? 'border border-pool bg-primary/10'
-                    : 'border border-transparent bg-muted/50 hover:bg-muted'
+                    ? 'border-2 border-pool bg-primary/10 shadow-glow'
+                    : 'border border-border/40 bg-card hover:border-border'
                 }`}
               >
-                <div className={`w-6 h-6 rounded-md ${color}`} />
+                <div className="w-7 h-7 rounded-lg shadow-inner" style={{ backgroundColor: color }} />
                 {label}
               </button>
             ))}
@@ -146,13 +156,13 @@ export function ControlsSidebar() {
               <button
                 key={id}
                 onClick={() => store.setDeckMaterial(id)}
-                className={`flex-1 flex flex-col items-center gap-1.5 p-2.5 rounded-lg text-[10px] font-medium transition-all duration-150 active:scale-[0.97] ${
+                className={`flex-1 flex flex-col items-center gap-2 p-3 rounded-xl text-[10px] font-semibold transition-all duration-200 active:scale-[0.96] ${
                   store.deckMaterial === id
-                    ? 'border border-pool bg-primary/10'
-                    : 'border border-transparent bg-muted/50 hover:bg-muted'
+                    ? 'border-2 border-pool bg-primary/10 shadow-glow'
+                    : 'border border-border/40 bg-card hover:border-border'
                 }`}
               >
-                <div className={`w-6 h-6 rounded-md ${color}`} />
+                <div className="w-7 h-7 rounded-lg shadow-inner" style={{ backgroundColor: color }} />
                 {label}
               </button>
             ))}
@@ -162,17 +172,23 @@ export function ControlsSidebar() {
         {/* Water Color */}
         <div>
           <SectionLabel>Water Color</SectionLabel>
-          <div className="flex gap-2">
+          <div className="flex gap-3">
             {WATER_COLORS.map(({ id, label, hex }) => (
               <button
                 key={id}
                 onClick={() => store.setWaterColor(id)}
                 title={label}
-                className={`w-8 h-8 rounded-full transition-all duration-150 active:scale-[0.95] ${
-                  store.waterColor === id ? 'ring-2 ring-primary ring-offset-2 ring-offset-card' : 'hover:scale-110'
+                className={`relative w-9 h-9 rounded-xl transition-all duration-200 active:scale-95 ${
+                  store.waterColor === id
+                    ? 'ring-2 ring-primary ring-offset-2 ring-offset-card scale-110'
+                    : 'hover:scale-110 opacity-80 hover:opacity-100'
                 }`}
                 style={{ backgroundColor: hex }}
-              />
+              >
+                {store.waterColor === id && (
+                  <Check className="absolute inset-0 m-auto h-3.5 w-3.5 text-white drop-shadow-md" />
+                )}
+              </button>
             ))}
           </div>
         </div>
@@ -180,22 +196,25 @@ export function ControlsSidebar() {
         {/* Add-Ons */}
         <div>
           <SectionLabel>Add-Ons</SectionLabel>
-          <div className="space-y-1.5">
-            {ADD_ONS.map(({ id, label, icon: Icon, price }) => (
-              <button
-                key={id}
-                onClick={() => store.toggleAddOn(id)}
-                className={`w-full flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-xs font-medium transition-all duration-150 active:scale-[0.97] ${
-                  store.addOns.includes(id)
-                    ? 'bg-primary/15 text-pool-accent border border-pool'
-                    : 'bg-muted/50 text-muted-foreground hover:bg-muted border border-transparent'
-                }`}
-              >
-                <Icon className="h-3.5 w-3.5" />
-                <span className="flex-1 text-left">{label}</span>
-                <span className="font-mono text-[10px] opacity-70">+${price}</span>
-              </button>
-            ))}
+          <div className="space-y-2">
+            {ADD_ONS.map(({ id, label, icon: Icon, price }) => {
+              const active = store.addOns.includes(id);
+              return (
+                <button
+                  key={id}
+                  onClick={() => store.toggleAddOn(id)}
+                  className={`w-full flex items-center gap-3 px-3.5 py-3 rounded-xl text-xs font-medium transition-all duration-200 active:scale-[0.97] ${
+                    active
+                      ? 'gradient-primary text-primary-foreground shadow-glow'
+                      : 'bg-card text-muted-foreground hover:text-foreground border border-border/40 hover:border-border'
+                  }`}
+                >
+                  <Icon className="h-4 w-4" />
+                  <span className="flex-1 text-left">{label}</span>
+                  <span className={`font-mono text-[10px] ${active ? 'text-primary-foreground/70' : 'opacity-50'}`}>+${price}</span>
+                </button>
+              );
+            })}
           </div>
         </div>
       </div>

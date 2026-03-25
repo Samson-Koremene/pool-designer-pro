@@ -2,57 +2,62 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 @layer base {
   :root {
-    --background: 220 20% 7%;
+    --background: 225 25% 6%;
     --foreground: 210 20% 92%;
 
-    --card: 220 18% 10%;
+    --card: 225 22% 9%;
     --card-foreground: 210 20% 92%;
 
-    --popover: 220 18% 10%;
+    --popover: 225 22% 9%;
     --popover-foreground: 210 20% 92%;
 
-    --primary: 180 65% 48%;
-    --primary-foreground: 220 20% 7%;
+    --primary: 185 72% 48%;
+    --primary-foreground: 225 25% 6%;
 
-    --secondary: 220 16% 14%;
+    --secondary: 225 18% 13%;
     --secondary-foreground: 210 20% 85%;
 
-    --muted: 220 14% 16%;
-    --muted-foreground: 215 12% 55%;
+    --muted: 225 16% 15%;
+    --muted-foreground: 220 12% 50%;
 
-    --accent: 180 65% 48%;
-    --accent-foreground: 220 20% 7%;
+    --accent: 185 72% 48%;
+    --accent-foreground: 225 25% 6%;
 
     --destructive: 0 72% 55%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 220 14% 18%;
-    --input: 220 14% 18%;
-    --ring: 180 65% 48%;
+    --border: 225 16% 14%;
+    --input: 225 16% 14%;
+    --ring: 185 72% 48%;
 
     --radius: 0.75rem;
 
-    --sidebar-background: 220 18% 10%;
+    --sidebar-background: 225 22% 9%;
     --sidebar-foreground: 210 20% 85%;
-    --sidebar-primary: 180 65% 48%;
-    --sidebar-primary-foreground: 220 20% 7%;
-    --sidebar-accent: 220 14% 16%;
+    --sidebar-primary: 185 72% 48%;
+    --sidebar-primary-foreground: 225 25% 6%;
+    --sidebar-accent: 225 16% 15%;
     --sidebar-accent-foreground: 210 20% 85%;
-    --sidebar-border: 220 14% 18%;
-    --sidebar-ring: 180 65% 48%;
+    --sidebar-border: 225 16% 14%;
+    --sidebar-ring: 185 72% 48%;
 
     /* Custom tokens */
-    --surface-elevated: 220 16% 12%;
-    --surface-overlay: 220 18% 10%;
-    --pool-accent: 180 65% 48%;
-    --pool-accent-dim: 180 50% 30%;
+    --surface-elevated: 225 20% 10%;
+    --surface-overlay: 225 22% 9%;
+    --surface-glass: 225 20% 12%;
+    --pool-accent: 185 72% 48%;
+    --pool-accent-dim: 185 50% 28%;
+    --pool-accent-glow: 185 80% 60%;
     --pool-water: 195 80% 55%;
     --pool-water-deep: 210 75% 40%;
-    --price-green: 150 60% 50%;
+    --price-green: 155 65% 52%;
+    --gradient-primary: linear-gradient(135deg, hsl(185 72% 48%), hsl(195 80% 55%));
+    --shadow-glow: 0 0 20px -5px hsl(185 72% 48% / 0.25);
+    --shadow-elevated: 0 8px 32px -8px hsl(225 25% 2% / 0.6);
   }
 }
 
@@ -73,8 +78,16 @@
   .surface-overlay {
     background-color: hsl(var(--surface-overlay));
   }
+  .surface-glass {
+    background-color: hsl(var(--surface-glass) / 0.7);
+    backdrop-filter: blur(16px) saturate(1.2);
+    -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  }
   .text-pool-accent {
     color: hsl(var(--pool-accent));
+  }
+  .text-pool-accent-glow {
+    color: hsl(var(--pool-accent-glow));
   }
   .bg-pool-accent {
     background-color: hsl(var(--pool-accent));
@@ -85,10 +98,56 @@
   .border-pool {
     border-color: hsl(var(--pool-accent-dim));
   }
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+  .shadow-elevated {
+    box-shadow: var(--shadow-elevated);
+  }
+  .gradient-primary {
+    background: var(--gradient-primary);
+  }
   .scrollbar-thin {
     scrollbar-width: thin;
     scrollbar-color: hsl(var(--muted)) transparent;
   }
+}
+
+/* Custom range slider */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: hsl(var(--muted));
+  outline: none;
+  transition: background 0.2s;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: hsl(var(--pool-accent));
+  cursor: pointer;
+  box-shadow: 0 0 8px hsl(var(--pool-accent) / 0.4), 0 2px 4px hsl(225 25% 2% / 0.3);
+  transition: transform 0.15s, box-shadow 0.15s;
+  border: 2px solid hsl(var(--background));
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+  box-shadow: 0 0 12px hsl(var(--pool-accent) / 0.6), 0 2px 6px hsl(225 25% 2% / 0.4);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: hsl(var(--pool-accent));
+  cursor: pointer;
+  box-shadow: 0 0 8px hsl(var(--pool-accent) / 0.4);
+  border: 2px solid hsl(var(--background));
 }
 
 /* Smooth scroll reveal animation */
