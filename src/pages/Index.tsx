@@ -26,11 +26,11 @@ const Index = () => {
           <ControlsSidebar />
         </div>
 
-        {/* Mobile/tablet overlay - left */}
+        {/* Mobile overlay - left */}
         {leftOpen && (
           <>
-            <div className="fixed inset-0 top-14 bg-black/60 backdrop-blur-sm z-30 lg:hidden animate-fade-in" onClick={() => setLeftOpen(false)} />
-            <div className="fixed left-0 top-14 bottom-0 z-40 lg:hidden animate-slide-in-left">
+            <div className="fixed inset-0 top-12 bg-background/80 z-30 lg:hidden animate-fade-in" onClick={() => setLeftOpen(false)} />
+            <div className="fixed left-0 top-12 bottom-0 z-40 lg:hidden animate-slide-in-left">
               <ControlsSidebar />
             </div>
           </>
@@ -38,7 +38,6 @@ const Index = () => {
 
         <main className="flex-1 relative">
           <PoolScene ref={sceneRef} />
-          {/* Mobile price badge */}
           <MobilePriceBadge />
         </main>
 
@@ -47,11 +46,11 @@ const Index = () => {
           <PropertiesPanel />
         </div>
 
-        {/* Mobile/tablet overlay - right */}
+        {/* Mobile overlay - right */}
         {rightOpen && (
           <>
-            <div className="fixed inset-0 top-14 bg-black/60 backdrop-blur-sm z-30 lg:hidden animate-fade-in" onClick={() => setRightOpen(false)} />
-            <div className="fixed right-0 top-14 bottom-0 z-40 lg:hidden animate-slide-in-right">
+            <div className="fixed inset-0 top-12 bg-background/80 z-30 lg:hidden animate-fade-in" onClick={() => setRightOpen(false)} />
+            <div className="fixed right-0 top-12 bottom-0 z-40 lg:hidden animate-slide-in-right">
               <PropertiesPanel />
             </div>
           </>
@@ -66,9 +65,9 @@ function MobilePriceBadge() {
   const price = calculatePrice(store);
 
   return (
-    <div className="lg:hidden absolute bottom-4 left-1/2 -translate-x-1/2 z-20 surface-glass border border-border/40 rounded-2xl px-5 py-2.5 flex items-center gap-2.5 shadow-elevated">
+    <div className="lg:hidden absolute bottom-4 left-1/2 -translate-x-1/2 z-20 bg-card border border-border rounded-md px-4 py-2 flex items-center gap-2 shadow-lg">
       <DollarSign className="h-3.5 w-3.5 text-muted-foreground" />
-      <span className="text-sm font-bold text-price font-mono tracking-tight">${price.toLocaleString()}</span>
+      <span className="text-sm font-bold text-price font-mono">${price.toLocaleString()}</span>
     </div>
   );
 }

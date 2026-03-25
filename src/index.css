@@ -7,57 +7,51 @@
 @layer base {
   :root {
     --background: 225 25% 6%;
-    --foreground: 210 20% 92%;
+    --foreground: 210 25% 95%;
 
-    --card: 225 22% 9%;
-    --card-foreground: 210 20% 92%;
+    --card: 225 22% 11%;
+    --card-foreground: 210 25% 95%;
 
-    --popover: 225 22% 9%;
-    --popover-foreground: 210 20% 92%;
+    --popover: 225 22% 11%;
+    --popover-foreground: 210 25% 95%;
 
     --primary: 185 72% 48%;
-    --primary-foreground: 225 25% 6%;
+    --primary-foreground: 225 30% 4%;
 
-    --secondary: 225 18% 13%;
-    --secondary-foreground: 210 20% 85%;
+    --secondary: 225 18% 16%;
+    --secondary-foreground: 210 20% 88%;
 
-    --muted: 225 16% 15%;
-    --muted-foreground: 220 12% 50%;
+    --muted: 225 16% 18%;
+    --muted-foreground: 220 10% 55%;
 
     --accent: 185 72% 48%;
-    --accent-foreground: 225 25% 6%;
+    --accent-foreground: 225 30% 4%;
 
     --destructive: 0 72% 55%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 225 16% 14%;
-    --input: 225 16% 14%;
+    --border: 225 14% 20%;
+    --input: 225 14% 20%;
     --ring: 185 72% 48%;
 
-    --radius: 0.75rem;
+    --radius: 0.625rem;
 
-    --sidebar-background: 225 22% 9%;
-    --sidebar-foreground: 210 20% 85%;
+    --sidebar-background: 225 24% 9%;
+    --sidebar-foreground: 210 20% 88%;
     --sidebar-primary: 185 72% 48%;
-    --sidebar-primary-foreground: 225 25% 6%;
-    --sidebar-accent: 225 16% 15%;
-    --sidebar-accent-foreground: 210 20% 85%;
-    --sidebar-border: 225 16% 14%;
+    --sidebar-primary-foreground: 225 30% 4%;
+    --sidebar-accent: 225 16% 16%;
+    --sidebar-accent-foreground: 210 20% 88%;
+    --sidebar-border: 225 14% 20%;
     --sidebar-ring: 185 72% 48%;
 
     /* Custom tokens */
-    --surface-elevated: 225 20% 10%;
-    --surface-overlay: 225 22% 9%;
-    --surface-glass: 225 20% 12%;
+    --surface-elevated: 225 24% 9%;
+    --surface-panel: 225 22% 11%;
     --pool-accent: 185 72% 48%;
-    --pool-accent-dim: 185 50% 28%;
-    --pool-accent-glow: 185 80% 60%;
+    --pool-accent-dim: 185 45% 25%;
     --pool-water: 195 80% 55%;
-    --pool-water-deep: 210 75% 40%;
     --price-green: 155 65% 52%;
-    --gradient-primary: linear-gradient(135deg, hsl(185 72% 48%), hsl(195 80% 55%));
-    --shadow-glow: 0 0 20px -5px hsl(185 72% 48% / 0.25);
-    --shadow-elevated: 0 8px 32px -8px hsl(225 25% 2% / 0.6);
   }
 }
 
@@ -75,19 +69,11 @@
   .surface-elevated {
     background-color: hsl(var(--surface-elevated));
   }
-  .surface-overlay {
-    background-color: hsl(var(--surface-overlay));
-  }
-  .surface-glass {
-    background-color: hsl(var(--surface-glass) / 0.7);
-    backdrop-filter: blur(16px) saturate(1.2);
-    -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  .surface-panel {
+    background-color: hsl(var(--surface-panel));
   }
   .text-pool-accent {
     color: hsl(var(--pool-accent));
-  }
-  .text-pool-accent-glow {
-    color: hsl(var(--pool-accent-glow));
   }
   .bg-pool-accent {
     background-color: hsl(var(--pool-accent));
@@ -97,15 +83,6 @@
   }
   .border-pool {
     border-color: hsl(var(--pool-accent-dim));
-  }
-  .shadow-glow {
-    box-shadow: var(--shadow-glow);
-  }
-  .shadow-elevated {
-    box-shadow: var(--shadow-elevated);
-  }
-  .gradient-primary {
-    background: var(--gradient-primary);
   }
   .scrollbar-thin {
     scrollbar-width: thin;
@@ -122,32 +99,25 @@ input[type="range"] {
   border-radius: 999px;
   background: hsl(var(--muted));
   outline: none;
-  transition: background 0.2s;
 }
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   background: hsl(var(--pool-accent));
   cursor: pointer;
-  box-shadow: 0 0 8px hsl(var(--pool-accent) / 0.4), 0 2px 4px hsl(225 25% 2% / 0.3);
-  transition: transform 0.15s, box-shadow 0.15s;
-  border: 2px solid hsl(var(--background));
-}
-input[type="range"]::-webkit-slider-thumb:hover {
-  transform: scale(1.2);
-  box-shadow: 0 0 12px hsl(var(--pool-accent) / 0.6), 0 2px 6px hsl(225 25% 2% / 0.4);
+  border: 2px solid hsl(var(--surface-elevated));
+  box-shadow: 0 0 6px hsl(var(--pool-accent) / 0.35);
 }
 input[type="range"]::-moz-range-thumb {
-  width: 16px;
-  height: 16px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   background: hsl(var(--pool-accent));
   cursor: pointer;
-  box-shadow: 0 0 8px hsl(var(--pool-accent) / 0.4);
-  border: 2px solid hsl(var(--background));
+  border: 2px solid hsl(var(--surface-elevated));
 }
 
 /* Smooth scroll reveal animation */
