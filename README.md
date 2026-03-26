@@ -1,3 +1,3 @@
-# Welcome to your Lovable project
+# Pool Designer Pro
 
-TODO: Document your project here
+A 3D interactive application to design your dream pool.
